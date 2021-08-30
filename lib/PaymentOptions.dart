@@ -36,7 +36,7 @@ class BankTicket extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final Widget copyBarCodeButton =
-        CustomButton('Cópiar código de barras do boleto');
+        CustomButton('Copiar código de barras do boleto');
     final Widget sendMail = CustomButton('Enviar boleto por e-mail');
 
     return AlignLeftColumn(
