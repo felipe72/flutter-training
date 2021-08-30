@@ -60,8 +60,10 @@ class CreditCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final Widget payWithCreditCard =
-        CustomButton('Pagar com cartão de crédito');
+    final Widget payWithCreditCard = CustomButton(
+      'Pagar com cartão de crédito',
+      active: true,
+    );
 
     return AlignLeftColumn(
       children: [
@@ -79,10 +81,28 @@ class CreditCard extends StatelessWidget {
 }
 
 class CustomButton extends StatelessWidget {
-  CustomButton(this.data, {Key key}) : super(key: key);
+  CustomButton(this.data, {Key key, this.active}) : super(key: key);
   final String data;
+  final bool active;
 
-  void onPressed() {}
+  void onPressed(BuildContext context) {
+    if (this.active != null) {
+    } else {
+      showDialog(
+        context: context,
+        builder: (BuildContext context) => AlertDialog(
+          title: Text('Erro'),
+          content: Text('Não implementado'),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () => Navigator.pop(context, 'Ok'),
+              child: Text('Ok'),
+            ),
+          ],
+        ),
+      );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -90,7 +110,7 @@ class CustomButton extends StatelessWidget {
     return Container(
       padding: EdgeInsets.symmetric(vertical: 2.0),
       child: OutlinedButton(
-        onPressed: onPressed,
+        onPressed: () => onPressed(context),
         child: SizedBox(
           height: 48,
           width: double.infinity,
