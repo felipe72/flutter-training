@@ -1,26 +1,27 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
+import '../../model/payments_options.dart';
+
 class InvoiceInstallments extends StatelessWidget {
-  InvoiceInstallments({Key key, this.selectedOption, this.onChanged})
+  InvoiceInstallments(
+      {Key key, this.selectedOption, this.options, this.onChanged})
       : super(key: key);
-  final int selectedOption;
+  final List<PaymentOption> options;
+  final PaymentOption selectedOption;
   final Function onChanged;
 
   @override
   Widget build(BuildContext context) {
-    List<int> prices = [3180, 3260, 3260, 3260, 3310, 3310];
-    List<InstallmentCard> cards = prices.asMap().entries.map((entry) {
-      int index = entry.key + 1;
-      int price = entry.value;
-
-      return InstallmentCard(
-        selectedOption: this.selectedOption,
-        price: price,
-        index: index,
-        onChanged: this.onChanged,
-      );
-    }).toList();
+    List<InstallmentCard> cards = options
+        .map(
+          (option) => InstallmentCard(
+            selectedOption: this.selectedOption,
+            currentOption: option,
+            onChanged: onChanged,
+          ),
+        )
+        .toList();
 
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
@@ -39,23 +40,24 @@ class InvoiceInstallments extends StatelessWidget {
 
 class InstallmentCard extends StatelessWidget {
   InstallmentCard(
-      {Key key, this.selectedOption, this.price, this.index, this.onChanged})
+      {Key key, this.selectedOption, this.currentOption, this.onChanged})
       : super(key: key);
 
   final formatCurrency = new NumberFormat("#,##0.00", "pt_BR");
 
-  final int selectedOption;
-  final int price;
-  final int index;
+  final PaymentOption selectedOption;
+  final PaymentOption currentOption;
   final Function onChanged;
+
+  int get index => currentOption.number;
+  double get price => currentOption.value;
+  double get total => currentOption.total;
 
   @override
   Widget build(BuildContext context) {
-    String total = 'R\$ ' + formatCurrency.format(this.price);
-    String installmentPrice = index.toString() +
-        ' x ' +
-        'R\$ ' +
-        formatCurrency.format(this.price / this.index);
+    String total = 'R\$ ' + formatCurrency.format(this.total);
+    String installmentPrice =
+        index.toString() + ' x ' + 'R\$ ' + formatCurrency.format(this.price);
 
     return Card(
       elevation: 2,
@@ -64,7 +66,7 @@ class InstallmentCard extends StatelessWidget {
         child: Row(
           children: [
             Radio(
-                value: this.index,
+                value: this.currentOption,
                 groupValue: this.selectedOption,
                 onChanged: this.onChanged),
             Expanded(

@@ -1,18 +1,34 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import '../widgets/invoice_installments.dart';
 import '../widgets/invoice_resume.dart';
 import '../widgets/invoice_buttons.dart';
 
+import '../../model/payments_options.dart';
+import '../../model/payments_options_model.dart';
+import '../../view_model/payments_options.dart';
+
 class PaymentOptionsScreen extends StatefulWidget {
+  PaymentsOptionsViewModel paymentOptionsViewModel =
+      PaymentsOptionsViewModel(paymentOptionsModel: PaymentsOptionsModel());
+  PaymentOption _selectedPaymentOption;
+  PaymentOption get selectedPaymentOption =>
+      _selectedPaymentOption ?? this.paymentOptionsViewModel.paymentsOptions[0];
+  set selectedPaymentOption(value) => _selectedPaymentOption = value;
+
   @override
   _PaymentOptionsScreenState createState() => _PaymentOptionsScreenState();
 }
 
 class _PaymentOptionsScreenState extends State<PaymentOptionsScreen> {
-  int _selectedOption = 1;
+  @override
+  void initState() {
+    super.initState();
+  }
 
-  void onChanged(int option) {
-    setState(() => _selectedOption = option);
+  void onChanged(PaymentOption option) {
+    setState(() => widget.selectedPaymentOption = option);
   }
 
   @override
@@ -26,7 +42,8 @@ class _PaymentOptionsScreenState extends State<PaymentOptionsScreen> {
         child: Column(
           children: [
             InvoiceInstallments(
-              selectedOption: this._selectedOption,
+              selectedOption: widget.selectedPaymentOption,
+              options: widget.paymentOptionsViewModel.paymentsOptions,
               onChanged: this.onChanged,
             ),
             Divider(),
