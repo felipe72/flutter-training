@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import './payment_options/view/screen/payment_options.dart';
 import 'Commons.dart';
 
-class PaymentOptions extends StatelessWidget {
-  PaymentOptions({Key key}) : super(key: key);
+class ChoosePayment extends StatelessWidget {
+  ChoosePayment({Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -87,6 +88,10 @@ class CustomButton extends StatelessWidget {
 
   void onPressed(BuildContext context) {
     if (this.active != null) {
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => PaymentOptionsScreen()),
+      );
     } else {
       showDialog(
         context: context,

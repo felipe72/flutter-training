@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'Commons.dart';
-import 'PaymentOptions.dart';
+import 'ChoosePayment.dart';
 import 'LastInvoice.dart';
 
 void main() {
@@ -16,7 +16,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: MyHomePage(title: 'Sistema de faturas'),
+      home: MyHomePage(title: 'Sistema de faturasdasdas'),
     );
   }
 }
@@ -37,7 +37,7 @@ class MyHomePage extends StatelessWidget {
             children: <Widget>[
               LastInvoice(),
               Divider(color: Colors.black),
-              PaymentOptions(),
+              ChoosePayment(),
             ],
           ),
         ),
