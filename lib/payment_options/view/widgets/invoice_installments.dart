@@ -50,7 +50,7 @@ class InstallmentCard extends StatelessWidget {
   final Function onChanged;
 
   int get index => currentOption.number;
-  double get price => currentOption.value;
+  double get price => currentOption.installmentValue;
   double get total => currentOption.total;
 
   @override

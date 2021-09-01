@@ -46,7 +46,7 @@ class PaymentOptionsWidget extends StatelessWidget {
               onChanged: this.onChanged,
             ),
             Divider(),
-            InvoiceResume(),
+            InvoiceResume(operationTax: vm.operationTax),
             Spacer(),
             InvoiceButtons(),
           ],

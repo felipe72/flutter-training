@@ -14,6 +14,8 @@ class PaymentOptionsViewModel {
   PaymentOption get selectedOption => paymentOptionsModel.selectedOption;
   set selectedOption(value) => paymentOptionsModel.selectedOption = value;
 
+  double get operationTax => paymentOptionsModel.operationTax;
+
   static ProxyProvider0 get provider {
     return ProxyProvider<PaymentOptionsModel, PaymentOptionsViewModel>(
       create: (context) => PaymentOptionsViewModel(

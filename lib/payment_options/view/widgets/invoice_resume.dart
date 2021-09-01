@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class InvoiceResume extends StatelessWidget {
-  InvoiceResume({Key key}) : super(key: key);
+  InvoiceResume({Key key, this.operationTax}) : super(key: key);
+  final double operationTax;
 
   @override
   Widget build(BuildContext context) {
@@ -12,7 +14,7 @@ class InvoiceResume extends StatelessWidget {
           children: [
             InvoicePrice(),
             SizedBox(height: 24),
-            OperationType(),
+            OperationTax(operationTax: operationTax),
           ],
         ),
       ),
@@ -42,8 +44,11 @@ class InvoicePrice extends StatelessWidget {
   }
 }
 
-class OperationType extends StatelessWidget {
-  OperationType({Key key}) : super(key: key);
+class OperationTax extends StatelessWidget {
+  OperationTax({Key key, this.operationTax}) : super(key: key);
+  final double operationTax;
+
+  final formatCurrency = new NumberFormat("#,##0.00", "pt_BR");
 
   @override
   Widget build(BuildContext context) {
@@ -56,7 +61,7 @@ class OperationType extends StatelessWidget {
           ),
         ),
         Text(
-          'R\$ 154,51',
+          'R\$ ' + formatCurrency.format(operationTax),
           style: TextStyle(fontSize: 16.0, color: Colors.grey),
         )
       ],

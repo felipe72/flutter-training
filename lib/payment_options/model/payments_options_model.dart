@@ -15,13 +15,13 @@ List<PaymentOption> options = [
 class PaymentOptionsModel extends ChangeNotifier {
   PaymentOptionsModel()
       : this._selectedOption = options[0],
-        this._paymentsOptions = options;
+        this.paymentsOptions = options,
+        this.invoiceValue = 3025.49;
 
-  double _invoiceValue;
-  List<PaymentOption> _paymentsOptions;
+  double invoiceValue;
+  List<PaymentOption> paymentsOptions;
 
-  double get invoiceValue => _invoiceValue;
-  List<PaymentOption> get paymentsOptions => _paymentsOptions;
+  double get operationTax => selectedOption.total - invoiceValue;
 
   PaymentOption _selectedOption;
   PaymentOption get selectedOption => _selectedOption;
