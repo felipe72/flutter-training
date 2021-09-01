@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import '../widgets/invoice_installments.dart';
 import '../widgets/invoice_resume.dart';
 import '../widgets/invoice_buttons.dart';
@@ -7,26 +8,30 @@ import '../../model/payments_options.dart';
 import '../../model/payments_options_model.dart';
 import '../../view_model/payments_options.dart';
 
-class PaymentOptionsScreen extends StatefulWidget {
-  final PaymentsOptionsViewModel paymentOptionsViewModel =
-      PaymentsOptionsViewModel(paymentOptionsModel: PaymentsOptionsModel());
-  PaymentOption _selectedPaymentOption;
-
-  PaymentOption get selectedPaymentOption =>
-      _selectedPaymentOption ?? this.paymentOptionsViewModel.paymentsOptions[0];
-  set selectedPaymentOption(value) => _selectedPaymentOption = value;
-
+class PaymentOptionsScreen extends StatelessWidget {
   @override
-  _PaymentOptionsScreenState createState() => _PaymentOptionsScreenState();
+  Widget build(BuildContext context) {
+    return MultiProvider(
+      providers: [
+        PaymentOptionsModel.provider,
+        PaymentOptionsViewModel.provider,
+      ],
+      child: PaymentOptionsWidget(),
+    );
+  }
 }
 
-class _PaymentOptionsScreenState extends State<PaymentOptionsScreen> {
-  void onChanged(PaymentOption option) {
-    setState(() => widget.selectedPaymentOption = option);
+class PaymentOptionsWidget extends StatelessWidget {
+  Function onChanged(BuildContext context) {
+    final vm = context.read<PaymentOptionsViewModel>();
+
+    return (PaymentOption option) => vm.selectedOption = option;
   }
 
   @override
   Widget build(BuildContext context) {
+    final vm = context.select((PaymentOptionsViewModel vm) => vm);
+
     return Scaffold(
       appBar: AppBar(
         title: Text('Pagamento de fatura'),
@@ -36,8 +41,8 @@ class _PaymentOptionsScreenState extends State<PaymentOptionsScreen> {
         child: Column(
           children: [
             InvoiceInstallments(
-              selectedOption: widget.selectedPaymentOption,
-              options: widget.paymentOptionsViewModel.paymentsOptions,
+              selectedOption: vm.selectedOption,
+              options: vm.paymentsOptions,
               onChanged: this.onChanged,
             ),
             Divider(),

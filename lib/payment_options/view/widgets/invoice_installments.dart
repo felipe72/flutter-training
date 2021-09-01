@@ -68,7 +68,7 @@ class InstallmentCard extends StatelessWidget {
             Radio(
                 value: this.currentOption,
                 groupValue: this.selectedOption,
-                onChanged: this.onChanged),
+                onChanged: this.onChanged(context)),
             Expanded(
               child: Text(installmentPrice, style: TextStyle(fontSize: 16.0)),
             ),
