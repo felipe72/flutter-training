@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import '../widgets/invoice_installments.dart';
 import '../widgets/invoice_resume.dart';
@@ -10,9 +8,10 @@ import '../../model/payments_options_model.dart';
 import '../../view_model/payments_options.dart';
 
 class PaymentOptionsScreen extends StatefulWidget {
-  PaymentsOptionsViewModel paymentOptionsViewModel =
+  final PaymentsOptionsViewModel paymentOptionsViewModel =
       PaymentsOptionsViewModel(paymentOptionsModel: PaymentsOptionsModel());
   PaymentOption _selectedPaymentOption;
+
   PaymentOption get selectedPaymentOption =>
       _selectedPaymentOption ?? this.paymentOptionsViewModel.paymentsOptions[0];
   set selectedPaymentOption(value) => _selectedPaymentOption = value;
@@ -22,11 +21,6 @@ class PaymentOptionsScreen extends StatefulWidget {
 }
 
 class _PaymentOptionsScreenState extends State<PaymentOptionsScreen> {
-  @override
-  void initState() {
-    super.initState();
-  }
-
   void onChanged(PaymentOption option) {
     setState(() => widget.selectedPaymentOption = option);
   }

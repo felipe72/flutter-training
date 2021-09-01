@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'Commons.dart';
 
 class LastInvoice extends StatelessWidget {
   LastInvoice({Key key}) : super(key: key);
@@ -8,7 +7,9 @@ class LastInvoice extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       padding: EdgeInsets.symmetric(vertical: 8.0),
-      child: AlignLeftColumn(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           InvoiceTitle(),
           Container(
@@ -41,7 +42,9 @@ class PriceAndDate extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return AlignLeftColumn(
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
           'R\$ 3.025,49',
