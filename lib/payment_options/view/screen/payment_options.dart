@@ -8,6 +8,8 @@ import '../../model/payments_options.dart';
 import '../../model/payments_options_model.dart';
 import '../../view_model/payments_options.dart';
 
+import '../../../shared/views/widgets/loading_column.dart';
+
 class PaymentOptionsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -38,7 +40,8 @@ class PaymentOptionsWidget extends StatelessWidget {
       ),
       body: Container(
         padding: EdgeInsets.all(16.0),
-        child: Column(
+        child: LoadingColumn(
+          isLoading: vm.selectedOption == null,
           children: [
             InvoiceInstallments(
               selectedOption: vm.selectedOption,
