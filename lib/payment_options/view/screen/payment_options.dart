@@ -5,17 +5,12 @@ import '../widgets/invoice_resume.dart';
 import '../widgets/invoice_buttons.dart';
 
 import '../../model/payments_options.dart';
-import '../../model/payments_options_model.dart';
 import '../../view_model/payments_options.dart';
 
 class PaymentOptionsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MultiProvider(
-      providers: [
-        PaymentOptionsModel.provider,
-        PaymentOptionsViewModel.provider,
-      ],
+    return PaymentOptionsViewModel.provider(
       child: PaymentOptionsWidget(),
     );
   }

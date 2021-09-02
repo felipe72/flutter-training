@@ -19,14 +19,17 @@ class PaymentOptionsViewModel {
       ? 0
       : paymentOptionsModel.operationTax;
 
-  static ProxyProvider0 get provider {
-    return ProxyProvider<PaymentOptionsModel, PaymentOptionsViewModel>(
-      create: (context) => PaymentOptionsViewModel(
-        paymentOptionsModel: context.read<PaymentOptionsModel>(),
-      ),
-      update: (context, paymentOptionsModel, model) => PaymentOptionsViewModel(
-        paymentOptionsModel: paymentOptionsModel,
-      ),
-    );
+  static Function get provider {
+    return ({child}) =>
+        ProxyProvider<PaymentOptionsModel, PaymentOptionsViewModel>(
+          create: (context) => PaymentOptionsViewModel(
+            paymentOptionsModel: context.read<PaymentOptionsModel>(),
+          ),
+          update: (context, paymentOptionsModel, model) =>
+              PaymentOptionsViewModel(
+            paymentOptionsModel: paymentOptionsModel,
+          ),
+          child: child,
+        );
   }
 }
