@@ -8,8 +8,6 @@ import '../../model/payments_options.dart';
 import '../../model/payments_options_model.dart';
 import '../../view_model/payments_options.dart';
 
-import '../../../shared/views/widgets/loading_column.dart';
-
 class PaymentOptionsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -32,29 +30,56 @@ class PaymentOptionsWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final vm = context.select((PaymentOptionsViewModel vm) => vm);
-
     return Scaffold(
       appBar: AppBar(
         title: Text('Pagamento de fatura'),
       ),
       body: Container(
         padding: EdgeInsets.all(16.0),
-        child: LoadingColumn(
-          isLoading: vm.selectedOption == null,
-          children: [
-            InvoiceInstallments(
-              selectedOption: vm.selectedOption,
-              options: vm.paymentsOptions,
-              onChanged: this.onChanged,
+        child: FutureBuilder<List<PaymentOption>>(
+            future: context.select(
+              (PaymentOptionsViewModel model) => model.getPaymentOptions(),
             ),
-            Divider(),
-            InvoiceResume(operationTax: vm.operationTax),
-            Spacer(),
-            InvoiceButtons(),
-          ],
-        ),
+            builder: (context, snapshot) {
+              if (snapshot.hasData) {
+                return PaymentOptionsContent(
+                  options: snapshot.data,
+                  onChanged: onChanged,
+                );
+              } else if (snapshot.hasError) {
+                return Text('${snapshot.error}');
+              }
+
+              return Center(child: CircularProgressIndicator());
+            }),
       ),
+    );
+  }
+}
+
+class PaymentOptionsContent extends StatelessWidget {
+  PaymentOptionsContent({this.onChanged, this.options});
+  final Function onChanged;
+  final List<PaymentOption> options;
+
+  @override
+  Widget build(BuildContext context) {
+    final vm = context.select((PaymentOptionsViewModel vm) => vm);
+    return Column(
+      children: [
+        InvoiceInstallments(
+          selectedOption: vm.selectedOption,
+          options: this.options,
+          onChanged: this.onChanged,
+        ),
+        Divider(),
+        InvoiceResume(
+          operationTax: vm.operationTax,
+          invoiceValue: vm.invoiceValue,
+        ),
+        Spacer(),
+        InvoiceButtons(),
+      ],
     );
   }
 }

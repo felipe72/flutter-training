@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 class InvoiceResume extends StatelessWidget {
-  InvoiceResume({Key key, this.operationTax}) : super(key: key);
+  InvoiceResume({Key key, this.operationTax, this.invoiceValue})
+      : super(key: key);
   final double operationTax;
+  final double invoiceValue;
 
   @override
   Widget build(BuildContext context) {
@@ -12,7 +14,7 @@ class InvoiceResume extends StatelessWidget {
         padding: EdgeInsets.symmetric(vertical: 24, horizontal: 16),
         child: Column(
           children: [
-            InvoicePrice(),
+            InvoicePrice(invoiceValue: this.invoiceValue),
             SizedBox(height: 24),
             OperationTax(operationTax: operationTax),
           ],
@@ -23,7 +25,10 @@ class InvoiceResume extends StatelessWidget {
 }
 
 class InvoicePrice extends StatelessWidget {
-  InvoicePrice({Key key}) : super(key: key);
+  InvoicePrice({Key key, this.invoiceValue}) : super(key: key);
+  final double invoiceValue;
+
+  final formatCurrency = new NumberFormat("#,##0.00", "pt_BR");
 
   @override
   Widget build(BuildContext context) {
@@ -36,7 +41,7 @@ class InvoicePrice extends StatelessWidget {
           ),
         ),
         Text(
-          'R\$ 3.025,49',
+          'R\$ ' + formatCurrency.format(this.invoiceValue),
           style: TextStyle(fontSize: 16.0, color: Colors.grey),
         )
       ],

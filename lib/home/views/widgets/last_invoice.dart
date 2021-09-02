@@ -47,7 +47,7 @@ class PriceAndDate extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          'R\$ 3.025,49',
+          'R\$ 4.544,55',
           style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
         ),
         Text(

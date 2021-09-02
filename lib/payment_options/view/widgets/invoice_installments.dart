@@ -32,7 +32,13 @@ class InvoiceInstallments extends StatelessWidget {
           style: TextStyle(fontWeight: FontWeight.bold),
         ),
         SizedBox(height: 8),
-        ...cards,
+        SizedBox(
+          height: 334,
+          child: ListView.builder(
+            itemCount: cards.length,
+            itemBuilder: (context, index) => cards[index],
+          ),
+        )
       ],
     );
   }

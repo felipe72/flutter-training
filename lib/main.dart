@@ -1,7 +1,12 @@
 import 'package:flutter/material.dart';
 import './home/views/screen/home.dart';
 
+import './payment_options/repository/rest/payment_options_rest_service.dart';
+import './shared/injectable/injectable_setup.dart';
+
 void main() {
+  getIt.registerSingleton<PaymentOptionsRestService>(
+      PaymentOptionsRestService());
   runApp(MyApp());
 }
 
